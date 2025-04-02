@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Agenda Semanal</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #e3f2fd;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .login-container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #1976d2;
+    }
+    button {
+      background-color: #1976d2;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #1565c0;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>Agenda Semanal</h2>
+    <button id="btn-login">Entrar com Google</button>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-app.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.6.10/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyAJQj-Vp70PTfa9jBRqvzigxzwREgboHM4",
+      authDomain: "agenda-semanal-a1760.firebaseapp.com",
+      projectId: "agenda-semanal-a1760",
+      storageBucket: "agenda-semanal-a1760.appspot.com",
+      messagingSenderId: "786539243602",
+      appId: "1:786539243602:web:a37f47adc31cfddcbfd78b",
+      measurementId: "G-NZT5LFJ5ZK"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    document.getElementById("btn-login").addEventListener("click", () => {
+      signInWithPopup(auth, provider)
+        .then(result => {
+          window.location.href = "index.html";
+        })
+        .catch(error => {
+          alert("Erro ao fazer login: " + error.message);
+        });
+    });
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) window.location.href = "index.html";
+    });
+  </script>
+</body>
+</html>
